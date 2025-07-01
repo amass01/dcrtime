@@ -439,11 +439,15 @@ func verifyDigests(vd []v2.VerifyDigest) {
 		if !*verbose {
 			continue
 		}
-		fmt.Printf("  %-15v: %v\n", "Chain Timestamp",
+		fmt.Printf("  %-16v: %v\n", "Chain Timestamp",
 			d.ChainInformation.ChainTimestamp)
-		fmt.Printf("  %-15v: %v\n", "Merkle Root",
+		fmt.Printf("  %-16v: %v\n", "Server Timestamp",
+			d.ServerTimestamp)
+		fmt.Printf("  %-16v: %v\n", "Flush Timestamp",
+			d.FlushTimestamp)
+		fmt.Printf("  %-16v: %v\n", "Merkle Root",
 			d.ChainInformation.MerkleRoot)
-		fmt.Printf("  %-15v: %v\n", "TxID",
+		fmt.Printf("  %-16v: %v\n", "TxID",
 			d.ChainInformation.Transaction)
 	}
 }
@@ -982,7 +986,6 @@ func lastDigestsV2(n int32) error {
 
 	r, err := c.Post(route, "application/json",
 		bytes.NewReader(ldj))
-
 	if err != nil {
 		return err
 	}

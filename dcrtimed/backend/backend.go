@@ -26,11 +26,9 @@ const (
 	ErrorNotAllowed = 4
 )
 
-var (
-	// ErrTryAgainLater is thrown when can't upload
-	// while anchoring
-	ErrTryAgainLater = errors.New("busy, try again later")
-)
+// ErrTryAgainLater is thrown when can't upload
+// while anchoring
+var ErrTryAgainLater = errors.New("busy, try again later")
 
 // FlushRecord contains blockchain information.  This information only becomes
 // available once digests are anchored in the blockchain.  The information
@@ -43,6 +41,9 @@ type FlushRecord struct {
 	ChainTimestamp int64                // Blockchain timestamp, if available
 	FlushTimestamp int64                // Time flush actually happened
 	Confirmations  *int32               // Number of Tx confirmations
+	// As we periodically collect hashes, each collection identified by the
+	// the timestamp when we started the collection
+	ServerTimestamp int64
 }
 
 // PutResult is a cooked error returned by the backend.
@@ -71,6 +72,7 @@ type GetResult struct {
 	Confirmations     *int32            // Tx confirmations
 	MinConfirmations  int32             // Mininum number of confirmations to return timestamp proof
 	AnchoredTimestamp int64             // Anchored timestamp
+	FlushTimestamp    int64             // Flush timestamp
 	Tx                chainhash.Hash    // Anchor Tx
 	MerkleRoot        [sha256.Size]byte // Merkle root
 	MerklePath        merkle.Branch     // Auth path

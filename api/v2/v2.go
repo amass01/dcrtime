@@ -164,6 +164,7 @@ type VerifyReply struct {
 type VerifyDigest struct {
 	Digest           string           `json:"digest"`
 	ServerTimestamp  int64            `json:"servertimestamp"`
+	FlushTimestamp   int64            `json:"flushtimestamp"`
 	Result           ResultT          `json:"result"`
 	ChainInformation ChainInformation `json:"chaininformation"`
 }
